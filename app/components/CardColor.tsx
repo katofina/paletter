@@ -1,13 +1,16 @@
-import { View } from "react-native";
+import React, { Children } from "react";
+import { ListRenderItemInfo, View } from "react-native";
 import { TouchableOpacity } from "react-native";
 import { StyleSheet } from "react-native";
 
 interface Prop {
   color: string;
   box_height: number;
+  children: React.JSX.Element
 }
 
-export default function Card({ color, box_height }: Prop) {
+export default function Card({ color, box_height, children }: Prop) {
+  console.log(color);
   return (
     <>
       <View
@@ -19,24 +22,11 @@ export default function Card({ color, box_height }: Prop) {
           zIndex: 0,
         }}
       >
-        <TouchableOpacity style={style.buttonAdd}>+</TouchableOpacity>
+        {children}
       </View>
     </>
   );
 }
 
 const style = StyleSheet.create({
-  buttonAdd: {
-    borderWidth: 1,
-    borderColor: "rgba(0,0,0,0.2)",
-    alignItems: "center",
-    justifyContent: "center",
-    width: 50,
-    height: 50,
-    backgroundColor: "#fff",
-    borderRadius: 50,
-    fontSize: 40,
-    position: "absolute",
-    bottom: 0,
-  },
 });
