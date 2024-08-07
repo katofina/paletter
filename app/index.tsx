@@ -1,9 +1,8 @@
 import {
   Dimensions,
   FlatList,
-  ScrollView,
+  SafeAreaView,
   StyleSheet,
-  Text,
 } from "react-native";
 import Card from "./components/CardColor";
 import React, { useEffect, useRef } from "react";
@@ -21,7 +20,7 @@ export default function Palette() {
   }, [colors]);
 
   return (
-    <ScrollView style={style.container}>
+    <SafeAreaView style={style.container}>
       <FlatList
         data={colors}
         renderItem={(item) => (
@@ -32,7 +31,7 @@ export default function Palette() {
           />
         )}
       />
-    </ScrollView>
+    </SafeAreaView>
   );
 }
 

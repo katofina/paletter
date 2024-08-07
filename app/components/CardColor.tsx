@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import { StyleSheet } from "react-native";
 import Panel from "./Panel";
 import { useDispatch } from "react-redux";
@@ -28,7 +28,7 @@ export default function Card({ color, box_height, index }: Prop) {
     >
       <Text>{color}</Text>
       <Panel />
-      <TouchableOpacity
+      <Pressable
         style={style.buttonAdd}
         onPress={() => {
           const color = getColor();
@@ -36,7 +36,7 @@ export default function Card({ color, box_height, index }: Prop) {
         }}
       >
         <Text style={style.buttonText}>+</Text>
-      </TouchableOpacity>
+      </Pressable>
     </View>
   );
 }
@@ -55,6 +55,6 @@ const style = StyleSheet.create({
   },
   buttonText: {
     textAlign: "center",
-    textAlignVertical: "center",
+    verticalAlign: "middle",
   },
 });

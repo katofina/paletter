@@ -34,7 +34,7 @@ export default function RootLayout() {
               ),
             }}
           />
-          <Stack.Screen name="(firebase)" />
+          <Stack.Screen name="firebase" />
         </Stack>
       </SafeAreaProvider>
     </Provider>

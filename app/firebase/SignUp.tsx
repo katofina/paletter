@@ -1,16 +1,9 @@
 import React from "react";
-import { TextInput, Text, Button, View, StyleSheet } from "react-native";
+import { TextInput, Text, View, StyleSheet, Pressable } from "react-native";
 import * as yup from "yup";
 import { Formik } from "formik";
 
 export default function SignUp() {
-  const inputStyle = {
-    borderWidth: 1,
-    borderColor: "#4e4e4e",
-    padding: 12,
-    marginBottom: 5,
-  };
-
   return (
     <Formik
       initialValues={{
@@ -39,7 +32,7 @@ export default function SignUp() {
         <View style={styles.formContainer}>
           <TextInput
             value={values.email}
-            style={inputStyle}
+            style={styles.inputStyle}
             onChangeText={handleChange("email")}
             onBlur={() => setFieldTouched("email")}
             placeholder="E-mail"
@@ -51,7 +44,7 @@ export default function SignUp() {
           )}
           <TextInput
             value={values.password}
-            style={inputStyle}
+            style={styles.inputStyle}
             onChangeText={handleChange("password")}
             placeholder="Password"
             onBlur={() => setFieldTouched("password")}
@@ -62,12 +55,15 @@ export default function SignUp() {
               {errors.password}
             </Text>
           )}
-          <Button
-            color="#3740FE"
-            title="Sign Up"
+          <Pressable
+            style={styles.signButton}
             disabled={!isValid}
             onPress={() => handleSubmit()}
-          />
+          >
+            <Text>
+              Sign Up
+            </Text>
+          </Pressable>
         </View>
       )}
     </Formik>
@@ -78,4 +74,18 @@ const styles = StyleSheet.create({
   formContainer: {
     padding: 50,
   },
+  signButton: {
+    width: "auto",
+    height: 50,
+    borderWidth: 2,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "antiquewhite"
+  },
+  inputStyle: {
+    borderWidth: 1,
+    borderColor: "#4e4e4e",
+    padding: 12,
+    marginBottom: 5,
+  }
 });
