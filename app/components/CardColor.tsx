@@ -16,29 +16,28 @@ export default function Card({ color, box_height, index }: Prop) {
   const dispatch = useDispatch();
 
   return (
-      <View
-        style={{
-          backgroundColor: color,
-          height: box_height,
-          justifyContent: "center",
-          alignItems: "center",
-          zIndex: 0,
+    <View
+      style={{
+        backgroundColor: color,
+        height: box_height,
+        justifyContent: "space-around",
+        alignItems: "center",
+        zIndex: 0,
+        flexDirection: "row",
+      }}
+    >
+      <Text>{color}</Text>
+      <Panel />
+      <TouchableOpacity
+        style={style.buttonAdd}
+        onPress={() => {
+          const color = getColor();
+          dispatch(colorState.actions.setColor({ color: color, index: index }));
         }}
       >
-        <Text>{color}</Text>
-        <Panel/>
-        <TouchableOpacity 
-            style={style.buttonAdd}
-            onPress={() => {
-              const color = getColor();
-              dispatch(colorState.actions.setColor({color: color, index: index}));
-            }}
-            >
-              <Text style={style.buttonText}>
-                +
-              </Text>
-        </TouchableOpacity>
-      </View>
+        <Text style={style.buttonText}>+</Text>
+      </TouchableOpacity>
+    </View>
   );
 }
 
@@ -52,10 +51,10 @@ const style = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     height: 25,
-    width: 25
+    width: 25,
   },
   buttonText: {
     textAlign: "center",
     textAlignVertical: "center",
-  }
+  },
 });

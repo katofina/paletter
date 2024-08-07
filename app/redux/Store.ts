@@ -3,11 +3,11 @@ import colorState from "./ColorSlice";
 import { ColorState } from "./ColorSlice";
 
 export interface Store {
-    colorState: ColorState
+  colorState: ColorState;
 }
 
 export const store = configureStore({
-    reducer: {
-        colorState: colorState.reducer,
-    },
+  reducer: {
+    colorState: colorState.reducer,
+  },
 });

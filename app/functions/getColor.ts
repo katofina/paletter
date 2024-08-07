@@ -1,8 +1,8 @@
 import randomColor from "randomcolor";
 
 export default function getColor() {
-    return randomColor({
-        luminosity: "light",
-        hue: "random",
-    });
+  return randomColor({
+    luminosity: "light",
+    hue: "random",
+  });
 }

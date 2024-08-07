@@ -16,6 +16,8 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.2",
+    "@react-native-firebase/app": "^20.3.0",
+    "@react-native-firebase/auth": "^20.3.0",
     "@react-navigation/native": "^6.0.2",
     "@reduxjs/toolkit": "^2.2.7",
     "@types/randomcolor": "^0.5.9",
@@ -29,6 +31,7 @@
     "expo-status-bar": "~1.12.1",
     "expo-system-ui": "~3.0.7",
     "expo-web-browser": "~13.0.3",
+    "firebase": "^10.12.5",
     "randomcolor": "^0.6.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",

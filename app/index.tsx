@@ -1,4 +1,10 @@
-import { Dimensions, FlatList, ScrollView, StyleSheet, Text } from "react-native";
+import {
+  Dimensions,
+  FlatList,
+  ScrollView,
+  StyleSheet,
+  Text,
+} from "react-native";
 import Card from "./components/CardColor";
 import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
@@ -15,17 +21,18 @@ export default function Palette() {
   }, [colors]);
 
   return (
-      <ScrollView style={style.container}>
-          <FlatList
-            data={colors}
-            renderItem={(item) =>       
-            <Card 
-              color={String(item.item)}
-              box_height={box_height.current}
-              index={item.index}
-            />}
+    <ScrollView style={style.container}>
+      <FlatList
+        data={colors}
+        renderItem={(item) => (
+          <Card
+            color={String(item.item)}
+            box_height={box_height.current}
+            index={item.index}
           />
-        </ScrollView>
+        )}
+      />
+    </ScrollView>
   );
 }
 
