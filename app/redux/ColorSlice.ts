@@ -19,16 +19,23 @@ const colorState = createSlice({
   initialState,
   reducers: {
     setColor: (state, action: PayloadAction<ActionAdd>) => {
-      const arrBefore = [];
-      const arrAfter = [];
+      const arrBefore = state.colors.filter(
+        (item, index) => index <= action.payload.index,
+      );
+      const arrAfter = state.colors.filter(
+        (item, index) => index > action.payload.index,
+      );
       const pivot = action.payload.color;
-      for (let i = 0; i < action.payload.index + 1; i++) {
-        arrBefore.push(state.colors[i]);
-      }
-      for (let i = action.payload.index + 1; i < state.colors.length; i++) {
-        arrAfter.push(state.colors[i]);
-      }
       state.colors = arrBefore.concat(pivot, arrAfter);
+    },
+    deleteColor: (state, action: PayloadAction<number>) => {
+      const arrBefore = state.colors.filter(
+        (item, index) => index < action.payload,
+      );
+      const arrAfter = state.colors.filter(
+        (item, index) => index > action.payload,
+      );
+      state.colors = arrBefore.concat(arrAfter);
     },
   },
 });

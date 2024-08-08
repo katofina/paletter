@@ -39,9 +39,14 @@ export default function PanelSign() {
     );
   } else
     return (
-      <Pressable style={style.link} onPress={logOut}>
-        <Text>Sign Out</Text>
-      </Pressable>
+      <View style={style.viewLinks}>
+        <Link style={style.link} href="/Profile">
+          Profile
+        </Link>
+        <Pressable style={style.link} onPress={logOut}>
+          <Text>Sign Out</Text>
+        </Pressable>
+      </View>
     );
 }
 

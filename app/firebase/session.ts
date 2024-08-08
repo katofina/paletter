@@ -15,7 +15,7 @@ export const getSession = () => {
   };
 };
 
-export const endSession = async(): Promise<void> => {
+export const endSession = async (): Promise<void> => {
   await AsyncStorage.clear();
 };
 

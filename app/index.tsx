@@ -1,17 +1,16 @@
 import { Dimensions, FlatList, SafeAreaView, StyleSheet } from "react-native";
 import Card from "./components/CardColor";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useId, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { Store } from "./redux/Store";
 
-const { height } = Dimensions.get("window");
-
 export default function Palette() {
+  const { height } = Dimensions.get("window");
   const colors = useSelector((store: Store) => store.colorState.colors);
-  const box_height = useRef(height / colors.length);
+  const [boxHeight, setBoxHeight] = useState<number>();
 
   useEffect(() => {
-    box_height.current = height / colors.length;
+    setBoxHeight(height / colors.length);
   }, [colors]);
 
   return (
@@ -21,10 +20,11 @@ export default function Palette() {
         renderItem={(item) => (
           <Card
             color={String(item.item)}
-            box_height={box_height.current}
+            box_height={boxHeight}
             index={item.index}
           />
         )}
+        key={useId()}
       />
     </SafeAreaView>
   );

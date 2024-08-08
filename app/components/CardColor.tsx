@@ -8,7 +8,7 @@ import getColor from "../functions/getColor";
 
 interface Prop {
   color: string;
-  box_height: number;
+  box_height: number | undefined;
   index: number;
 }
 
@@ -27,7 +27,7 @@ export default function Card({ color, box_height, index }: Prop) {
       }}
     >
       <Text>{color}</Text>
-      <Panel />
+      <Panel index={index} />
       <Pressable
         style={style.buttonAdd}
         onPress={() => {
