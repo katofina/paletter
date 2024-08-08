@@ -1,9 +1,4 @@
-import {
-  Dimensions,
-  FlatList,
-  SafeAreaView,
-  StyleSheet,
-} from "react-native";
+import { Dimensions, FlatList, SafeAreaView, StyleSheet } from "react-native";
 import Card from "./components/CardColor";
 import React, { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";

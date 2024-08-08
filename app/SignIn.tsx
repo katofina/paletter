@@ -1,16 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import { TextInput, Text, View, StyleSheet, Pressable } from "react-native";
 import * as yup from "yup";
 import { Formik } from "formik";
+import { signInUser } from "./firebase/firebase";
+import { startSession } from "./firebase/session";
+import { useNavigation } from "expo-router";
+import { useDispatch } from "react-redux";
+import authState from "./redux/AuthSlice";
 
-export default function SignUp() {
+export default function SignIn(): React.JSX.Element {
+  const dispatch = useDispatch();
+  const navigate = useNavigation();
+  const [error, setError] = useState("");
   return (
     <Formik
       initialValues={{
         email: "",
         password: "",
       }}
-      onSubmit={(values) => console.log(JSON.stringify(values))}
+      onSubmit={async (values) => {
+        try {
+          let loginResponse = await signInUser(values.email, values.password);
+          let accessToken = await loginResponse.user.getIdToken();
+          startSession(loginResponse.user.email, accessToken);
+          dispatch(authState.actions.setToken(accessToken));
+          navigate.goBack();
+        } catch (error) {
+          console.error((error as Error).message);
+          setError((error as Error).message);
+        }
+      }}
       validationSchema={yup.object().shape({
         email: yup.string().email().required(),
         password: yup
@@ -60,10 +79,9 @@ export default function SignUp() {
             disabled={!isValid}
             onPress={() => handleSubmit()}
           >
-            <Text>
-              Sign Up
-            </Text>
+            <Text>Sign In</Text>
           </Pressable>
+          {error ? <Text style={{ color: "red" }}>{error}</Text> : null}
         </View>
       )}
     </Formik>
@@ -80,12 +98,12 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "antiquewhite"
+    backgroundColor: "antiquewhite",
   },
   inputStyle: {
     borderWidth: 1,
     borderColor: "#4e4e4e",
     padding: 12,
     marginBottom: 5,
-  }
+  },
 });

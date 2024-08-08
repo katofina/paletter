@@ -1,21 +1,43 @@
-import React from "react";
+import React, { useState } from "react";
 import { TextInput, Text, View, StyleSheet, Pressable } from "react-native";
 import * as yup from "yup";
 import { Formik } from "formik";
+import { createUser } from "./firebase/firebase";
+import { startSession } from "./firebase/session";
+import { useNavigation } from "expo-router";
+import { useDispatch } from "react-redux";
+import authState from "./redux/AuthSlice";
 
-export default function SignIn() {
+export default function SignUp() {
+  const navigation = useNavigation();
+  const [error, setError] = useState("");
+  const dispatch = useDispatch();
   return (
     <Formik
       initialValues={{
         email: "",
         password: "",
       }}
-      onSubmit={(values) => console.log(JSON.stringify(values))}
+      onSubmit={async (values) => {
+        try {
+          let registerResponse = await createUser(
+            values.email,
+            values.password,
+          );
+          let accessToken = await registerResponse.user.getIdToken();
+          startSession(registerResponse.user.email, accessToken);
+          dispatch(authState.actions.setToken(accessToken));
+          navigation.goBack();
+        } catch (error) {
+          console.error((error as Error).message);
+          setError((error as Error).message);
+        }
+      }}
       validationSchema={yup.object().shape({
         email: yup.string().email().required(),
         password: yup
           .string()
-          .min(4)
+          .min(6, "Password shoul have at least 4 chars")
           .max(10, "Password should not excced 10 chars.")
           .required(),
       })}
@@ -60,8 +82,9 @@ export default function SignIn() {
             disabled={!isValid}
             onPress={() => handleSubmit()}
           >
-            <Text>Sign In</Text>
+            <Text>Sign Up</Text>
           </Pressable>
+          {error ? <Text style={{ color: "red" }}>{error}</Text> : null}
         </View>
       )}
     </Formik>
@@ -78,12 +101,12 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "antiquewhite"
+    backgroundColor: "antiquewhite",
   },
   inputStyle: {
     borderWidth: 1,
     borderColor: "#4e4e4e",
     padding: 12,
     marginBottom: 5,
-  }
+  },
 });
