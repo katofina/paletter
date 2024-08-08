@@ -26,7 +26,7 @@ export default function Card({ color, box_height, index }: Prop) {
         flexDirection: "row",
       }}
     >
-      <Text>{color}</Text>
+      <Text style={style.colorText}>{color}</Text>
       <Panel index={index} />
       <Pressable
         style={style.buttonAdd}
@@ -56,5 +56,8 @@ const style = StyleSheet.create({
   buttonText: {
     textAlign: "center",
     verticalAlign: "middle",
+  },
+  colorText: {
+    fontSize: 20,
   },
 });

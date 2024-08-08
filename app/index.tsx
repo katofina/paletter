@@ -1,6 +1,6 @@
 import { Dimensions, FlatList, SafeAreaView, StyleSheet } from "react-native";
 import Card from "./components/CardColor";
-import React, { useEffect, useId, useRef, useState } from "react";
+import React, { useEffect, useId, useState } from "react";
 import { useSelector } from "react-redux";
 import { Store } from "./redux/Store";
 
@@ -19,7 +19,7 @@ export default function Palette() {
         data={colors}
         renderItem={(item) => (
           <Card
-            color={String(item.item)}
+            color={String(item.item.color)}
             box_height={boxHeight}
             index={item.index}
           />

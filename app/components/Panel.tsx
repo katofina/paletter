@@ -25,7 +25,12 @@ export default function Panel({ index }: Prop) {
         <AntDesign name="hearto" size={24} color="black" />
       </Pressable>
       <Pressable>
-        <FontAwesome name="exchange" size={24} color="black" />
+        <FontAwesome
+          style={style.changeButton}
+          name="exchange"
+          size={24}
+          color="black"
+        />
       </Pressable>
       <Pressable>
         <AntDesign name="save" size={24} color="black" />
@@ -43,5 +48,10 @@ export default function Panel({ index }: Prop) {
 const style = StyleSheet.create({
   buttonPanel: {
     flexDirection: "row",
+    justifyContent: "space-between",
+    width: "30%",
+  },
+  changeButton: {
+    transform: "rotate(90deg)",
   },
 });

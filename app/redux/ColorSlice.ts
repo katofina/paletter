@@ -1,8 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import getColor from "../functions/getColor";
 
+export interface ObjectColor {
+  color: string;
+}
+
 export interface ColorState {
-  colors: string[];
+  colors: Array<ObjectColor>;
 }
 
 interface ActionAdd {
@@ -11,7 +15,7 @@ interface ActionAdd {
 }
 
 const initialState: ColorState = {
-  colors: [getColor(), getColor()],
+  colors: [{ color: getColor() }, { color: getColor() }],
 };
 
 const colorState = createSlice({
@@ -26,7 +30,7 @@ const colorState = createSlice({
         (item, index) => index > action.payload.index,
       );
       const pivot = action.payload.color;
-      state.colors = arrBefore.concat(pivot, arrAfter);
+      state.colors = arrBefore.concat({ color: pivot }, arrAfter);
     },
     deleteColor: (state, action: PayloadAction<number>) => {
       const arrBefore = state.colors.filter(
