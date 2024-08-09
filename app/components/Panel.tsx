@@ -2,14 +2,17 @@ import { Pressable, View } from "react-native";
 import { AntDesign, FontAwesome } from "@expo/vector-icons";
 import { StyleSheet } from "react-native";
 import { useDispatch } from "react-redux";
-import colorState from "../redux/ColorSlice";
-
+import * as Clipboard from 'expo-clipboard';
 interface Prop {
-  index: number;
+  color: string;
 }
 
-export default function Panel({ index }: Prop) {
+export default function Panel({ color }: Prop) {
   const dispatch = useDispatch();
+
+  async function copyColor() {
+    await Clipboard.setStringAsync(color);
+  };
 
   return (
     <View style={style.buttonPanel}>
@@ -21,7 +24,7 @@ export default function Panel({ index }: Prop) {
           color="black"
         />
       </Pressable>
-      <Pressable>
+      <Pressable onPress={copyColor}>
         <FontAwesome name="copy" size={24} color="black" />
       </Pressable>
       <Pressable>

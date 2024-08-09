@@ -7,10 +7,9 @@ import { useDispatch } from "react-redux";
 interface Prop {
   color: string;
   box_height: number | undefined;
-  index: number;
 }
 
-export default function Card({ color, box_height, index }: Prop) {
+export default function Card({ color, box_height }: Prop) {
   const dispatch = useDispatch();
 
   return (
@@ -25,7 +24,7 @@ export default function Card({ color, box_height, index }: Prop) {
       }}
     >
       <Text style={style.colorText}>{color}</Text>
-      <Panel index={index} />
+      <Panel color={color}/>
     </View>
   );
 }
