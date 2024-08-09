@@ -13,17 +13,6 @@ export default function Panel({ index }: Prop) {
 
   return (
     <View style={style.buttonPanel}>
-      <Pressable
-        onPress={() => dispatch(colorState.actions.deleteColor(index))}
-      >
-        <AntDesign name="delete" size={24} color="black" />
-      </Pressable>
-      <Pressable>
-        <AntDesign name="heart" size={24} color="black" />
-      </Pressable>
-      <Pressable>
-        <AntDesign name="hearto" size={24} color="black" />
-      </Pressable>
       <Pressable>
         <FontAwesome
           style={style.changeButton}
@@ -33,7 +22,7 @@ export default function Panel({ index }: Prop) {
         />
       </Pressable>
       <Pressable>
-        <AntDesign name="save" size={24} color="black" />
+        <FontAwesome name="copy" size={24} color="black" />
       </Pressable>
       <Pressable>
         <AntDesign name="lock" size={24} color="black" />

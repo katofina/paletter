@@ -1,8 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import getColor from "../functions/getColor";
+import getColorObject from "../functions/getColorObject";
 
 export interface ObjectColor {
   color: string;
+  locked: boolean;
 }
 
 export interface ColorState {
@@ -15,33 +17,22 @@ interface ActionAdd {
 }
 
 const initialState: ColorState = {
-  colors: [{ color: getColor() }, { color: getColor() }],
+  colors: getColorObject()
 };
 
 const colorState = createSlice({
   name: "colorState",
   initialState,
   reducers: {
-    setColor: (state, action: PayloadAction<ActionAdd>) => {
-      const arrBefore = state.colors.filter(
-        (item, index) => index <= action.payload.index,
-      );
-      const arrAfter = state.colors.filter(
-        (item, index) => index > action.payload.index,
-      );
-      const pivot = action.payload.color;
-      state.colors = arrBefore.concat({ color: pivot }, arrAfter);
-    },
-    deleteColor: (state, action: PayloadAction<number>) => {
-      const arrBefore = state.colors.filter(
-        (item, index) => index < action.payload,
-      );
-      const arrAfter = state.colors.filter(
-        (item, index) => index > action.payload,
-      );
-      state.colors = arrBefore.concat(arrAfter);
+    changeColors: (state) => {
+      state.colors = state.colors.map((item) => {
+        if (item.locked === false) {
+          return {...item, color: getColor()}
+        } else return item;
+      })
     },
   },
 });
 
 export default colorState;
+
