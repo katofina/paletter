@@ -4,6 +4,7 @@ import { StyleSheet } from "react-native";
 import { useDispatch } from "react-redux";
 import * as Clipboard from "expo-clipboard";
 import colorState from "../redux/ColorSlice";
+import { TouchableOpacity } from "react-native-gesture-handler";
 interface Prop {
   color: string;
   index: number;
@@ -28,9 +29,9 @@ export default function Panel({ color, index, lock, drag }: Prop) {
           color="black"
         />
       </Pressable>
-      <Pressable onPress={copyColor}>
+      <TouchableOpacity onPress={copyColor}>
         <FontAwesome name="copy" size={24} color="black" />
-      </Pressable>
+      </TouchableOpacity>
       {lock ? (
         <Pressable
           onPress={() =>

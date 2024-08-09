@@ -10,6 +10,8 @@ export interface ObjectColor {
 
 export interface ColorState {
   colors: Array<ObjectColor>;
+  stackColors: Array<Array<ObjectColor>>;
+  cancelColors: Array<Array<ObjectColor>>;
 }
 
 interface ActionAdd {
@@ -19,6 +21,8 @@ interface ActionAdd {
 
 const initialState: ColorState = {
   colors: getColorObject(),
+  stackColors: [],
+  cancelColors: [],
 };
 
 const colorState = createSlice({
@@ -26,11 +30,13 @@ const colorState = createSlice({
   initialState,
   reducers: {
     changeColors: (state) => {
-      state.colors = state.colors.map((item) => {
+      const newArr = state.colors.map((item) => {
         if (item.locked === false) {
           return { ...item, color: getColor() };
         } else return item;
       });
+      state.colors = newArr;
+      state.stackColors.push(newArr);
     },
 
     setLock: (state, action: PayloadAction<ActionAdd>) => {
@@ -41,6 +47,27 @@ const colorState = createSlice({
     setArray: (state, action: PayloadAction<Array<ObjectColor>>) => {
       const newArr = action.payload;
       state.colors = newArr;
+      state.stackColors.push(newArr);
+    },
+
+    pushColors: (state) => {
+      state.stackColors.push(state.colors);
+    },
+
+    cancelColors: (state) => {
+      if (state.stackColors.length > 1) {
+        const cancel = state.stackColors.pop()!;
+        state.colors = state.stackColors[state.stackColors.length - 1];
+        state.cancelColors.push(cancel);
+      }
+    },
+
+    forwardColors: (state) => {
+      if (state.cancelColors.length > 0) {
+        const forward = state.cancelColors.pop()!;
+        state.colors = forward;
+        state.stackColors.push(forward);
+      }
     },
   },
 });
