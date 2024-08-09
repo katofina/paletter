@@ -30,14 +30,10 @@ export default function PanelSign() {
     return (
       <View style={style.viewLinks}>
         <Pressable style={style.link}>
-          <Link href="/SignUp">
-            Sign Up
-          </Link>
+          <Link href="/SignUp">Sign Up</Link>
         </Pressable>
-        <Pressable style={style.link} >
-          <Link href="/SignIn">
-            Sign In
-          </Link>
+        <Pressable style={style.link}>
+          <Link href="/SignIn">Sign In</Link>
         </Pressable>
       </View>
     );
@@ -45,9 +41,7 @@ export default function PanelSign() {
     return (
       <View style={style.viewLinks}>
         <Pressable style={style.link}>
-          <Link href="/Profile">
-            Profile
-          </Link>
+          <Link href="/Profile">Profile</Link>
         </Pressable>
         <Pressable style={style.link} onPress={logOut}>
           <Text>Sign Out</Text>

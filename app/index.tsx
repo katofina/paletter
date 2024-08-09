@@ -3,7 +3,7 @@ import Card from "./components/CardColor";
 import React, { useEffect, useId, useState } from "react";
 import { useSelector } from "react-redux";
 import { Store } from "./redux/Store";
-import { NativeModules } from 'react-native';
+import { NativeModules } from "react-native";
 import MyTabBar from "./components/MyTabBar";
 
 export default function Palette() {
@@ -13,7 +13,7 @@ export default function Palette() {
   useEffect(() => {
     const { height } = Dimensions.get("window");
     const { StatusBarManager } = NativeModules;
-    setBoxHeight((height - StatusBarManager.HEIGHT-50) / colors.length);
+    setBoxHeight((height - StatusBarManager.HEIGHT - 50) / colors.length);
   }, [colors]);
 
   return (
@@ -25,10 +25,11 @@ export default function Palette() {
             color={String(item.item.color)}
             box_height={boxHeight}
             index={item.index}
+            lock={item.item.locked}
           />
         )}
       />
-      <MyTabBar/>
+      <MyTabBar />
     </SafeAreaView>
   );
 }
