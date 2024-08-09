@@ -9,9 +9,10 @@ interface Prop {
   box_height: number | undefined;
   index: number;
   lock: boolean;
+  drag: () => void;
 }
 
-export default function Card({ color, box_height, index, lock }: Prop) {
+export default function Card({ drag, color, box_height, index, lock }: Prop) {
   const dispatch = useDispatch();
 
   return (
@@ -26,7 +27,7 @@ export default function Card({ color, box_height, index, lock }: Prop) {
       }}
     >
       <Text style={style.colorText}>{color}</Text>
-      <Panel color={color} index={index} lock={lock} />
+      <Panel color={color} index={index} lock={lock} drag={drag} />
     </View>
   );
 }

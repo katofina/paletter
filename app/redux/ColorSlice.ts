@@ -5,6 +5,7 @@ import getColorObject from "../functions/getColorObject";
 export interface ObjectColor {
   color: string;
   locked: boolean;
+  id: string;
 }
 
 export interface ColorState {
@@ -35,6 +36,11 @@ const colorState = createSlice({
     setLock: (state, action: PayloadAction<ActionAdd>) => {
       const index = action.payload.index;
       state.colors[index].locked = action.payload.lock;
+    },
+
+    setArray: (state, action: PayloadAction<Array<ObjectColor>>) => {
+      const newArr = action.payload;
+      state.colors = newArr;
     },
   },
 });

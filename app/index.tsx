@@ -1,14 +1,24 @@
-import { Dimensions, FlatList, SafeAreaView, StyleSheet } from "react-native";
+import { Dimensions, ScrollView, SafeAreaView, StyleSheet } from "react-native";
 import Card from "./components/CardColor";
-import React, { useEffect, useId, useState } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Store } from "./redux/Store";
 import { NativeModules } from "react-native";
 import MyTabBar from "./components/MyTabBar";
+import DraggableFlatList, {
+  NestableDraggableFlatList,
+  NestableScrollContainer,
+} from "react-native-draggable-flatlist";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import colorState from "./redux/ColorSlice";
 
 export default function Palette() {
+  const dispatch = useDispatch();
   const colors = useSelector((store: Store) => store.colorState.colors);
   const [boxHeight, setBoxHeight] = useState<number>();
+  function onMoveEnd({ data }: any) {
+    dispatch(colorState.actions.setArray(data));
+  }
 
   useEffect(() => {
     const { height } = Dimensions.get("window");
@@ -17,20 +27,25 @@ export default function Palette() {
   }, [colors]);
 
   return (
-    <SafeAreaView style={style.container}>
-      <FlatList
-        data={colors}
-        renderItem={(item) => (
-          <Card
-            color={String(item.item.color)}
-            box_height={boxHeight}
-            index={item.index}
-            lock={item.item.locked}
-          />
-        )}
-      />
+    <GestureHandlerRootView>
+      <NestableScrollContainer style={style.container}>
+        <NestableDraggableFlatList
+          data={colors}
+          renderItem={({ item, drag }) => (
+            <Card
+              drag={drag}
+              color={String(item.color)}
+              box_height={boxHeight}
+              index={colors.indexOf(item)}
+              lock={item.locked}
+            />
+          )}
+          keyExtractor={(item) => item.id}
+          onDragEnd={onMoveEnd}
+        />
+      </NestableScrollContainer>
       <MyTabBar />
-    </SafeAreaView>
+    </GestureHandlerRootView>
   );
 }
 

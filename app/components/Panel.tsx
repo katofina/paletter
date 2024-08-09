@@ -8,9 +8,10 @@ interface Prop {
   color: string;
   index: number;
   lock: boolean;
+  drag: () => void;
 }
 
-export default function Panel({ color, index, lock }: Prop) {
+export default function Panel({ color, index, lock, drag }: Prop) {
   const dispatch = useDispatch();
 
   async function copyColor() {
@@ -19,7 +20,7 @@ export default function Panel({ color, index, lock }: Prop) {
 
   return (
     <View style={style.buttonPanel}>
-      <Pressable>
+      <Pressable onPressIn={drag}>
         <FontAwesome
           style={style.changeButton}
           name="exchange"
