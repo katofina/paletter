@@ -2,16 +2,15 @@ import React, { useState } from "react";
 import { TextInput, Text, View, StyleSheet, Pressable } from "react-native";
 import * as yup from "yup";
 import { Formik } from "formik";
-import { createUser } from "./firebase/firebase";
-import { startSession } from "./firebase/session";
 import { useNavigation } from "expo-router";
 import { useDispatch } from "react-redux";
-import authState from "./redux/AuthSlice";
+import auth from '@react-native-firebase/auth';
 
 export default function SignUp() {
   const navigation = useNavigation();
   const [error, setError] = useState("");
   const dispatch = useDispatch();
+  
   return (
     <Formik
       initialValues={{
@@ -20,17 +19,10 @@ export default function SignUp() {
       }}
       onSubmit={async (values) => {
         try {
-          let registerResponse = await createUser(
-            values.email,
-            values.password,
-          );
-          let accessToken = await registerResponse.user.getIdToken();
-          startSession(registerResponse.user.email, accessToken);
-          dispatch(authState.actions.setToken(accessToken));
+          auth().createUserWithEmailAndPassword(values.email, values.password);
           navigation.goBack();
         } catch (error) {
-          console.error((error as Error).message);
-          setError((error as Error).message);
+          setError(error as string);
         }
       }}
       validationSchema={yup.object().shape({

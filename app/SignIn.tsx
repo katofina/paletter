@@ -2,11 +2,9 @@ import React, { useState } from "react";
 import { TextInput, Text, View, StyleSheet, Pressable } from "react-native";
 import * as yup from "yup";
 import { Formik } from "formik";
-import { signInUser } from "./firebase/firebase";
-import { startSession } from "./firebase/session";
 import { useNavigation } from "expo-router";
 import { useDispatch } from "react-redux";
-import authState from "./redux/AuthSlice";
+import auth from '@react-native-firebase/auth';
 
 export default function SignIn(): React.JSX.Element {
   const dispatch = useDispatch();
@@ -20,14 +18,10 @@ export default function SignIn(): React.JSX.Element {
       }}
       onSubmit={async (values) => {
         try {
-          let loginResponse = await signInUser(values.email, values.password);
-          let accessToken = await loginResponse.user.getIdToken();
-          startSession(loginResponse.user.email, accessToken);
-          dispatch(authState.actions.setToken(accessToken));
+          auth().signInWithEmailAndPassword(values.email, values.password);
           navigate.goBack();
         } catch (error) {
-          console.error((error as Error).message);
-          setError((error as Error).message);
+          setError(error as string);
         }
       }}
       validationSchema={yup.object().shape({

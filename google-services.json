@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "744916091443",
+    "firebase_url": "https://palette-ec5c5-default-rtdb.firebaseio.com",
+    "project_id": "palette-ec5c5",
+    "storage_bucket": "palette-ec5c5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:744916091443:android:a7863d07adb90e244b5946",
+        "android_client_info": {
+          "package_name": "com.katofina.paletter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGtUBQw9i4VjOM94t-rIa70__SfMqbox4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:744916091443:android:6db19fc1f8498c754b5946",
+        "android_client_info": {
+          "package_name": "com.paletter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGtUBQw9i4VjOM94t-rIa70__SfMqbox4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

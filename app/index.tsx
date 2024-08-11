@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import Card from "./components/CardColor";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Store } from "./redux/Store";
 import MyTabBar from "./components/MyTabBar";
