@@ -4,7 +4,7 @@ import * as yup from "yup";
 import { Formik } from "formik";
 import { useNavigation } from "expo-router";
 import { useDispatch } from "react-redux";
-import auth from '@react-native-firebase/auth';
+import auth from "@react-native-firebase/auth";
 
 export default function SignIn(): React.JSX.Element {
   const dispatch = useDispatch();

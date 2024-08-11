@@ -42,7 +42,7 @@ export default function Palette() {
             onDragEnd={onMoveEnd}
           />
         </NestableScrollContainer>
-        <MyTabBar />
+        <MyTabBar colors={colors} />
       </GestureHandlerRootView>
     );
 }

@@ -1,11 +1,24 @@
 import { AntDesign, Ionicons } from "@expo/vector-icons";
 import { View, Text, StyleSheet, Pressable } from "react-native";
-import { useDispatch } from "react-redux";
-import colorState from "../redux/ColorSlice";
+import { useDispatch, useSelector } from "react-redux";
+import colorState, { ObjectColor } from "../redux/ColorSlice";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import database from "@react-native-firebase/database";
+import { Store } from "../redux/Store";
 
-export default function MyTabBar() {
+interface Prop {
+  colors: Array<ObjectColor>;
+}
+
+export default function MyTabBar({ colors }: Prop) {
   const dispatch = useDispatch();
+  const email = useSelector((store: Store) => store.authState.email);
+
+  function save() {
+    if (email) {
+      database().ref(email).push(colors);
+    }
+  }
 
   return (
     <View style={style.bottomPanel}>
@@ -27,7 +40,7 @@ export default function MyTabBar() {
       >
         <Ionicons name="return-up-forward-outline" size={30} color="black" />
       </TouchableOpacity>
-      <TouchableOpacity>
+      <TouchableOpacity onPress={save}>
         <AntDesign name="save" size={24} color="black" />
       </TouchableOpacity>
     </View>

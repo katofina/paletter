@@ -1,18 +1,26 @@
 import { Link } from "expo-router";
 import { Pressable, View, Text, StyleSheet } from "react-native";
 import { useState } from "react";
-import auth from '@react-native-firebase/auth';
+import auth from "@react-native-firebase/auth";
+import { useDispatch } from "react-redux";
+import authState from "../redux/AuthSlice";
 
 export default function PanelSign() {
   const [isAuth, setIsAuth] = useState(false);
+  const dispatch = useDispatch();
 
   auth().onAuthStateChanged((user) => {
-    if(user) {
+    if (user) {
+      const email = user.email;
+      const index = email!.indexOf("@");
+      const name = email!.substring(0, index);
+      dispatch(authState.actions.setEmail(name));
       setIsAuth(true);
     } else {
+      dispatch(authState.actions.setEmail(null));
       setIsAuth(false);
     }
-  })
+  });
 
   if (!isAuth) {
     return (
