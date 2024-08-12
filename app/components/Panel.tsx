@@ -5,11 +5,20 @@ import { useDispatch } from "react-redux";
 import * as Clipboard from "expo-clipboard";
 import colorState from "../redux/ColorSlice";
 import { TouchableOpacity } from "react-native-gesture-handler";
+import Toast from "react-native-toast-message";
 interface Prop {
   color: string;
   index: number;
   lock: boolean;
   drag: () => void;
+}
+
+function showtoast() {
+  Toast.show({
+    type: "success",
+    text1: "Copied to the clipboard",
+    visibilityTime: 1500,
+  });
 }
 
 export default function Panel({ color, index, lock, drag }: Prop) {
@@ -29,7 +38,12 @@ export default function Panel({ color, index, lock, drag }: Prop) {
           color="black"
         />
       </Pressable>
-      <TouchableOpacity onPress={copyColor}>
+      <TouchableOpacity
+        onPress={() => {
+          copyColor();
+          showtoast();
+        }}
+      >
         <FontAwesome name="copy" size={24} color="black" />
       </TouchableOpacity>
       {lock ? (

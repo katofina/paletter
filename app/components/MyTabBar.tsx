@@ -5,9 +5,18 @@ import colorState, { ObjectColor } from "../redux/ColorSlice";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import database from "@react-native-firebase/database";
 import { Store } from "../redux/Store";
+import Toast from "react-native-toast-message";
 
 interface Prop {
   colors: Array<ObjectColor>;
+}
+
+function showtoast() {
+  Toast.show({
+    type: "success",
+    text1: "Successfully saved",
+    visibilityTime: 1500,
+  });
 }
 
 export default function MyTabBar({ colors }: Prop) {
@@ -21,29 +30,37 @@ export default function MyTabBar({ colors }: Prop) {
   }
 
   return (
-    <View style={style.bottomPanel}>
-      <Pressable
-        style={style.generate}
-        onPress={() => {
-          dispatch(colorState.actions.changeColors());
-        }}
-      >
-        <Text>Generate</Text>
-      </Pressable>
-      <TouchableOpacity
-        onPress={() => dispatch(colorState.actions.cancelColors())}
-      >
-        <Ionicons name="return-up-back-outline" size={30} color="black" />
-      </TouchableOpacity>
-      <TouchableOpacity
-        onPress={() => dispatch(colorState.actions.forwardColors())}
-      >
-        <Ionicons name="return-up-forward-outline" size={30} color="black" />
-      </TouchableOpacity>
-      <TouchableOpacity onPress={save}>
-        <AntDesign name="save" size={24} color="black" />
-      </TouchableOpacity>
-    </View>
+    <>
+      <Toast></Toast>
+      <View style={style.bottomPanel}>
+        <Pressable
+          style={style.generate}
+          onPress={() => {
+            dispatch(colorState.actions.changeColors());
+          }}
+        >
+          <Text>Generate</Text>
+        </Pressable>
+        <TouchableOpacity
+          onPress={() => dispatch(colorState.actions.cancelColors())}
+        >
+          <Ionicons name="return-up-back-outline" size={30} color="black" />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => dispatch(colorState.actions.forwardColors())}
+        >
+          <Ionicons name="return-up-forward-outline" size={30} color="black" />
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => {
+            save();
+            showtoast();
+          }}
+        >
+          <AntDesign name="save" size={24} color="black" />
+        </TouchableOpacity>
+      </View>
+    </>
   );
 }
 

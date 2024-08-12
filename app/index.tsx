@@ -11,6 +11,7 @@ import {
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import colorState from "./redux/ColorSlice";
 import getBoxHeight from "./functions/getBoxHeight";
+import Toast from "react-native-toast-message";
 
 export default function Palette() {
   const dispatch = useDispatch();
