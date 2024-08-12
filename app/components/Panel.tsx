@@ -63,6 +63,13 @@ export default function Panel({ color, index, lock, drag }: Prop) {
           <AntDesign name="unlock" size={24} color="black" />
         </Pressable>
       )}
+      <Pressable
+        onPress={() => 
+          dispatch(colorState.actions.deleteColor(index))
+        }
+      >
+        <AntDesign name="delete" size={24} color="black" />
+      </Pressable>
     </View>
   );
 }
@@ -70,8 +77,8 @@ export default function Panel({ color, index, lock, drag }: Prop) {
 const style = StyleSheet.create({
   buttonPanel: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    width: "30%",
+    justifyContent: "space-around",
+    width: "100%",
   },
   changeButton: {
     transform: "rotate(90deg)",

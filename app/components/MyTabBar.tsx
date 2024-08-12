@@ -41,6 +41,14 @@ export default function MyTabBar({ colors }: Prop) {
         >
           <Text>Generate</Text>
         </Pressable>
+        <Pressable
+          style={style.add}
+          onPress={() => {
+            dispatch(colorState.actions.addColor());
+          }}
+        >
+          <Text>Add</Text>
+        </Pressable>
         <TouchableOpacity
           onPress={() => dispatch(colorState.actions.cancelColors())}
         >
@@ -80,4 +88,12 @@ const style = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "antiquewhite",
   },
+  add: {
+    borderWidth: 1,
+    width: "10%",
+    height: "80%",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "antiquewhite",
+  }
 });

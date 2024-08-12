@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { Dimensions, StyleSheet, View } from "react-native";
 import Card from "./components/CardColor";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,7 +11,6 @@ import {
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import colorState from "./redux/ColorSlice";
 import getBoxHeight from "./functions/getBoxHeight";
-import Toast from "react-native-toast-message";
 
 export default function Palette() {
   const dispatch = useDispatch();
@@ -27,31 +26,26 @@ export default function Palette() {
   if (colors)
     return (
       <GestureHandlerRootView>
-        <NestableScrollContainer style={style.container}>
-          <NestableDraggableFlatList
-            data={colors}
-            renderItem={({ item, drag }) => (
-              <Card
-                drag={drag}
-                color={String(item.color)}
-                box_height={getBoxHeight()}
-                index={colors.indexOf(item)}
-                lock={item.locked}
+          <NestableScrollContainer>
+              <NestableDraggableFlatList
+                data={colors}
+                renderItem={({ item, drag }) => (
+                  <Card
+                    drag={drag}
+                    color={String(item.color)}
+                    box_height={getBoxHeight(colors.length)}
+                    index={colors.indexOf(item)}
+                    lock={item.locked}
+                  />
+                )}
+                keyExtractor={(item) => item.id}
+                onDragEnd={onMoveEnd}
               />
-            )}
-            keyExtractor={(item) => item.id}
-            onDragEnd={onMoveEnd}
-          />
-        </NestableScrollContainer>
+            </NestableScrollContainer>
         <MyTabBar colors={colors} />
       </GestureHandlerRootView>
     );
 }
 
 const style = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: "column",
-    margin: 0,
-  },
 });

@@ -50,11 +50,11 @@ export default function Profile() {
               <FlatList
                 horizontal={true}
                 data={item}
-                renderItem={({ item }) => (
+                renderItem={(thing) => (
                   <View
                     style={{
-                      backgroundColor: item.color,
-                      width: (Dimensions.get("window").width - 10) / 5,
+                      backgroundColor: thing.item.color,
+                      width: (Dimensions.get("window").width - 10) / item.length,
                       height: "100%",
                     }}
                   ></View>
