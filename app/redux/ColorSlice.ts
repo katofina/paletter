@@ -71,7 +71,9 @@ const colorState = createSlice({
     },
 
     deleteColor: (state, action: PayloadAction<number>) => {
-      const newArr = state.colors.filter((item, index) => index !== action.payload);
+      const newArr = state.colors.filter(
+        (item, index) => index !== action.payload,
+      );
       state.colors = newArr;
       state.stackColors.push(newArr);
     },
@@ -79,7 +81,7 @@ const colorState = createSlice({
     addColor: (state) => {
       const newColor = getColorObject(1);
       state.colors = state.colors.concat(newColor);
-    }
+    },
   },
 });
 

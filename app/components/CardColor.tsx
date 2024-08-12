@@ -1,8 +1,10 @@
-import React, { useState } from "react";
-import { View, Text, ViewStyle, StyleProp, ViewProps, Button, Pressable } from "react-native";
+import React from "react";
+import { View, Text } from "react-native";
 import { StyleSheet } from "react-native";
 import Panel from "./Panel";
-import GestureRecognizer from 'react-native-swipe-gestures';
+import Swipeable from "react-native-gesture-handler/Swipeable";
+import { useDispatch } from "react-redux";
+import colorState from "../redux/ColorSlice";
 import { AntDesign } from "@expo/vector-icons";
 interface Prop {
   color: string;
@@ -13,23 +15,33 @@ interface Prop {
 }
 
 export default function Card({ drag, color, box_height, index, lock }: Prop) {
-  const [display, setDisplay] = useState<any>("none");
-  const [justify, setJustify] = useState<any>("center");
+  const dispatch = useDispatch();
 
   return (
-    <GestureRecognizer 
-      onSwipeLeft={() => {
-        setDisplay("block"); 
-        setJustify("space-between");
-      }}
-      onSwipeRight={() => {
-        setDisplay("none");
-        setJustify("space-around");
-      }}
-      config={{
-        velocityThreshold: 0.1,
-        directionalOffsetThreshold: 30,
-      }}
+    <Swipeable
+      renderRightActions={() => (
+        <View
+          style={{
+            backgroundColor: "red",
+            justifyContent: "center",
+            width: "100%",
+            alignItems: "flex-end",
+          }}
+        >
+          <AntDesign
+            name="delete"
+            size={24}
+            color="black"
+            style={{ marginRight: 10 }}
+          />
+        </View>
+      )}
+      onSwipeableRightOpen={() =>
+        dispatch(colorState.actions.deleteColor(index))
+      }
+      renderLeftActions={() => (
+        <Panel color={color} index={index} lock={lock} drag={drag} />
+      )}
     >
       <View
         style={{
@@ -42,26 +54,8 @@ export default function Card({ drag, color, box_height, index, lock }: Prop) {
         }}
       >
         <Text style={style.colorText}>{color}</Text>
-        <Pressable>
-          {(display === "none") ? (
-              <AntDesign name="left" size={24} color="black" />
-            ) : (
-              <AntDesign name="right" size={24} color="black" />
-            )
-          }
-        </Pressable>
-        <View style={{
-          display: display,
-          width: "60%",
-          backgroundColor: "antiquewhite",
-          height: "90%",
-          justifyContent: "center",
-          alignItems: "center"
-        }}>
-          <Panel color={color} index={index} lock={lock} drag={drag} />
-        </View>
       </View>
-    </GestureRecognizer>
+    </Swipeable>
   );
 }
 

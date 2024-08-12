@@ -54,7 +54,8 @@ export default function Profile() {
                   <View
                     style={{
                       backgroundColor: thing.item.color,
-                      width: (Dimensions.get("window").width - 10) / item.length,
+                      width:
+                        (Dimensions.get("window").width - 10) / item.length,
                       height: "100%",
                     }}
                   ></View>

@@ -26,26 +26,25 @@ export default function Palette() {
   if (colors)
     return (
       <GestureHandlerRootView>
-          <NestableScrollContainer>
-              <NestableDraggableFlatList
-                data={colors}
-                renderItem={({ item, drag }) => (
-                  <Card
-                    drag={drag}
-                    color={String(item.color)}
-                    box_height={getBoxHeight(colors.length)}
-                    index={colors.indexOf(item)}
-                    lock={item.locked}
-                  />
-                )}
-                keyExtractor={(item) => item.id}
-                onDragEnd={onMoveEnd}
+        <NestableScrollContainer>
+          <NestableDraggableFlatList
+            data={colors}
+            renderItem={({ item, drag }) => (
+              <Card
+                drag={drag}
+                color={String(item.color)}
+                box_height={getBoxHeight(colors.length)}
+                index={colors.indexOf(item)}
+                lock={item.locked}
               />
-            </NestableScrollContainer>
+            )}
+            keyExtractor={(item) => item.id}
+            onDragEnd={onMoveEnd}
+          />
+        </NestableScrollContainer>
         <MyTabBar colors={colors} />
       </GestureHandlerRootView>
     );
 }
 
-const style = StyleSheet.create({
-});
+const style = StyleSheet.create({});

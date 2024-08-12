@@ -95,5 +95,5 @@ const style = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "antiquewhite",
-  }
+  },
 });
