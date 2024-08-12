@@ -1,13 +1,23 @@
-import { Link } from "expo-router";
-import { Pressable, View, Text, StyleSheet } from "react-native";
+import { useNavigation } from "expo-router";
+import {
+  TouchableOpacity,
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+} from "react-native";
 import { useState } from "react";
 import auth from "@react-native-firebase/auth";
 import { useDispatch } from "react-redux";
 import authState from "../redux/AuthSlice";
+const screenHeight = Dimensions.get("screen").height;
+const windowHeight = Dimensions.get("window").height;
+const navbarHeight = screenHeight - windowHeight;
 
 export default function PanelSign() {
   const [isAuth, setIsAuth] = useState(false);
   const dispatch = useDispatch();
+  const navigation = useNavigation();
 
   auth().onAuthStateChanged((user) => {
     if (user) {
@@ -25,23 +35,32 @@ export default function PanelSign() {
   if (!isAuth) {
     return (
       <View style={style.viewLinks}>
-        <Pressable style={style.link}>
-          <Link href="/SignUp">Sign Up</Link>
-        </Pressable>
-        <Pressable style={style.link}>
-          <Link href="/SignIn">Sign In</Link>
-        </Pressable>
+        <TouchableOpacity
+          style={style.link}
+          onPress={() => navigation.navigate("SignUp" as never)}
+        >
+          <Text>Sign Up</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={style.link}
+          onPress={() => navigation.navigate("SignIn" as never)}
+        >
+          <Text>Sign In</Text>
+        </TouchableOpacity>
       </View>
     );
   } else
     return (
       <View style={style.viewLinks}>
-        <Pressable style={style.link}>
-          <Link href="/Profile">Profile</Link>
-        </Pressable>
-        <Pressable style={style.link} onPress={() => auth().signOut()}>
+        <TouchableOpacity
+          style={style.link}
+          onPress={() => navigation.navigate("Profile" as never)}
+        >
+          <Text>Profile</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={style.link} onPress={() => auth().signOut()}>
           <Text>Sign Out</Text>
-        </Pressable>
+        </TouchableOpacity>
       </View>
     );
 }
@@ -50,15 +69,14 @@ const style = StyleSheet.create({
   viewLinks: {
     flexDirection: "row",
     width: "60%",
-    height: "100%",
+    height: navbarHeight,
   },
   link: {
-    margin: 5,
     borderWidth: 1,
     width: "50%",
     height: "100%",
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "antiquewhite",
+    marginLeft: 10,
   },
 });
