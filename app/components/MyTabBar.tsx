@@ -74,7 +74,7 @@ export default function MyTabBar({ colors }: Prop) {
 
 const style = StyleSheet.create({
   bottomPanel: {
-    height: "100%",
+    height: 50,
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",

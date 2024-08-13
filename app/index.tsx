@@ -22,8 +22,7 @@ export default function Palette() {
 
   if (colors)
     return (
-      <GestureHandlerRootView style={{flex: 1}}>
-        <View style={{flex: 0.93}}>
+      <GestureHandlerRootView>
           <DraggableFlatList
             data={colors}
             renderItem={({ item, drag }) => (
@@ -38,10 +37,7 @@ export default function Palette() {
             keyExtractor={(item) => item.id}
             onDragEnd={onMoveEnd}
           />
-        </View>
-        <View style={{flex: 0.07}}>
           <MyTabBar colors={colors} />
-        </View>
       </GestureHandlerRootView>
     );
 }
