@@ -26,7 +26,7 @@ export default function SignUp() {
         }
       }}
       validationSchema={yup.object().shape({
-        email: yup.string().email().required(),
+        email: yup.string().email().required().matches(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/, 'Example test@gmail.com'),
         password: yup
           .string()
           .min(6, "Password shoul have at least 4 chars")

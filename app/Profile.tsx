@@ -9,6 +9,7 @@ import {
   Dimensions,
   TouchableWithoutFeedback,
   SafeAreaView,
+  Text
 } from "react-native";
 import colorState, { ObjectColor } from "./redux/ColorSlice";
 import { useNavigation } from "expo-router";
@@ -23,12 +24,14 @@ export default function Profile() {
   useEffect(() => {
     itemsRef.on("value", (snapshot) => {
       let data = snapshot.val();
-      const items = Object.values(data);
-      setArrColors(items as ObjectColor[][]);
+      if(data) {
+        const items = Object.values(data);
+        setArrColors(items as ObjectColor[][]);
+      }
     });
   }, []);
 
-  return (
+  if(arrColors.length ) { return (
     <SafeAreaView style={{ backgroundColor: "white" }}>
       <FlatList
         data={arrColors}
@@ -66,5 +69,9 @@ export default function Profile() {
         )}
       />
     </SafeAreaView>
-  );
+  )} else return (
+    <View style={{alignItems: "center"}}>
+      <Text>There are no saved paletters yet.</Text>
+    </View>
+)
 }
