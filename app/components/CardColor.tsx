@@ -46,11 +46,12 @@ export default function Card({ drag, color, box_height, index, lock }: Prop) {
       <View
         style={{
           backgroundColor: color,
-          height: box_height,
           justifyContent: "space-around",
           alignItems: "center",
           zIndex: 0,
           flexDirection: "row",
+          borderWidth: 1,
+          height: box_height
         }}
       >
         <Text style={style.colorText}>{color}</Text>
