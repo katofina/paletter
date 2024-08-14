@@ -78,5 +78,6 @@ const style = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     marginLeft: 10,
+    backgroundColor: "honeydew",
   },
 });

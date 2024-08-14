@@ -1,45 +1,53 @@
-import { StyleSheet, View } from "react-native";
-import Card from "./components/CardColor";
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Store } from "./redux/Store";
-import MyTabBar from "./components/MyTabBar";
-import DraggableFlatList from "react-native-draggable-flatlist";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
-import colorState from "./redux/ColorSlice";
-import getBoxHeight from "./functions/getBoxHeight";
+import { useNavigation } from "expo-router";
+import { Pressable, View, Text, StyleSheet } from "react-native";
 
-export default function Palette() {
-  const dispatch = useDispatch();
-  const colors = useSelector((store: Store) => store.colorState.colors);
-  function onMoveEnd({ data }: any) {
-    dispatch(colorState.actions.setArray(data));
-  }
+export default function Home() {
+  const navigation = useNavigation();
+  return (
+    <View style={style.mainView}>
+      <Text style={style.text}>Create your own palettes</Text>
 
-  useEffect(() => {
-    dispatch(colorState.actions.pushColors());
-  }, []);
+      <View style={style.buttonsView}>
+        <Pressable style={style.button}>
+          <Text style={{ fontSize: 15 }}>Extract palette from image</Text>
+        </Pressable>
 
-  if (colors)
-    return (
-      <GestureHandlerRootView>
-        <DraggableFlatList
-          data={colors}
-          renderItem={({ item, drag }) => (
-            <Card
-              drag={drag}
-              color={String(item.color)}
-              box_height={getBoxHeight(colors.length)}
-              index={colors.indexOf(item)}
-              lock={item.locked}
-            />
-          )}
-          keyExtractor={(item) => item.id}
-          onDragEnd={onMoveEnd}
-        />
-        <MyTabBar colors={colors} />
-      </GestureHandlerRootView>
-    );
+        <Pressable
+          style={style.button}
+          onPress={() => navigation.navigate("Palette" as never)}
+        >
+          <Text style={{ fontSize: 15 }}>Get random color palettes</Text>
+        </Pressable>
+      </View>
+    </View>
+  );
 }
 
-const style = StyleSheet.create({});
+const style = StyleSheet.create({
+  mainView: {
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    height: "100%",
+    backgroundColor: "white",
+  },
+  buttonsView: {
+    height: "20%",
+    width: "100%",
+    alignItems: "center",
+  },
+  button: {
+    height: "50%",
+    width: "60%",
+    borderWidth: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    margin: 10,
+    backgroundColor: "honeydew",
+    borderRadius: 15,
+  },
+  text: {
+    fontSize: 40,
+    textAlign: "center",
+    margin: 10,
+  },
+});
