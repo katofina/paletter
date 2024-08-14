@@ -50,8 +50,7 @@ export default function Card({ drag, color, box_height, index, lock }: Prop) {
           alignItems: "center",
           zIndex: 0,
           flexDirection: "row",
-          borderWidth: 1,
-          height: box_height
+          height: box_height,
         }}
       >
         <Text style={style.colorText}>{color}</Text>

@@ -1,77 +1,80 @@
 import { useEffect, useState } from "react";
 
 import database from "@react-native-firebase/database";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Store } from "./redux/Store";
-import {
-  View,
-  FlatList,
-  Dimensions,
-  TouchableWithoutFeedback,
-  SafeAreaView,
-  Text
-} from "react-native";
-import colorState, { ObjectColor } from "./redux/ColorSlice";
-import { useNavigation } from "expo-router";
+import { View, Text } from "react-native";
+import { ObjectColor } from "./redux/ColorSlice";
+import Animated, {
+  AnimatedRef,
+  useAnimatedRef,
+  useScrollViewOffset,
+} from "react-native-reanimated";
+import AnimatedCard, {
+  heightStory,
+  widthStory,
+  windowWidth,
+} from "./components/AnimatedCard";
 
 export default function Profile() {
   const [arrColors, setArrColors] = useState<Array<Array<ObjectColor>>>([]);
+  const [text, setText] = useState("Loading");
   const email = useSelector((store: Store) => store.authState.email);
   let itemsRef = database().ref(email!);
-  const dispatch = useDispatch();
-  const navigate = useNavigation();
+  const animRef: AnimatedRef<Animated.ScrollView> = useAnimatedRef(); //runOnUI
+  const scrollOffset = useScrollViewOffset(animRef);
+  const padding = windowWidth - widthStory;
 
   useEffect(() => {
     itemsRef.on("value", (snapshot) => {
       let data = snapshot.val();
-      if(data) {
+      if (data) {
         const items = Object.values(data);
         setArrColors(items as ObjectColor[][]);
-      }
+      } else setText("There are no saved paletters yet.");
     });
   }, []);
 
-  if(arrColors.length ) { return (
-    <SafeAreaView style={{ backgroundColor: "white" }}>
-      <FlatList
-        data={arrColors}
-        renderItem={({ item }) => (
-          <TouchableWithoutFeedback
-            onPress={() => {
-              dispatch(colorState.actions.setArray(item));
-              navigate.navigate("index" as never);
-            }}
-          >
-            <View
-              style={{
-                width: Dimensions.get("window").width - 10,
-                height: 100,
-                borderWidth: 1,
-                margin: 5,
-              }}
-            >
-              <FlatList
-                horizontal={true}
-                data={item}
-                renderItem={(thing) => (
-                  <View
-                    style={{
-                      backgroundColor: thing.item.color,
-                      width:
-                        (Dimensions.get("window").width - 10) / item.length,
-                      height: "100%",
-                    }}
-                  ></View>
-                )}
+  return (
+    <View
+      style={{
+        flex: 1,
+        backgroundColor: "white",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      {arrColors.length ? null : <Text>{text}</Text>}
+      <View
+        style={{
+          height: heightStory,
+          width: widthStory,
+        }}
+      >
+        <Animated.ScrollView
+          horizontal
+          ref={animRef}
+          snapToInterval={widthStory}
+          decelerationRate={"fast"}
+          scrollEventThrottle={16}
+          showsHorizontalScrollIndicator={false}
+          disableIntervalMomentum
+          contentContainerStyle={{
+            width: widthStory * arrColors.length + padding,
+          }}
+        >
+          {arrColors.map((arr, index) => {
+            return (
+              <AnimatedCard
+                key={index}
+                arr={arr}
+                index={index}
+                scrollOffset={scrollOffset}
               />
-            </View>
-          </TouchableWithoutFeedback>
-        )}
-      />
-    </SafeAreaView>
-  )} else return (
-    <View style={{alignItems: "center"}}>
-      <Text>There are no saved paletters yet.</Text>
+            );
+          })}
+        </Animated.ScrollView>
+      </View>
     </View>
-)
+  );
 }

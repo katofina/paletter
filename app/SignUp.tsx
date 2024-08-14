@@ -3,13 +3,11 @@ import { TextInput, Text, View, StyleSheet, Pressable } from "react-native";
 import * as yup from "yup";
 import { Formik } from "formik";
 import { useNavigation } from "expo-router";
-import { useDispatch } from "react-redux";
 import auth from "@react-native-firebase/auth";
 
 export default function SignUp() {
   const navigation = useNavigation();
   const [error, setError] = useState("");
-  const dispatch = useDispatch();
 
   return (
     <Formik
@@ -26,7 +24,14 @@ export default function SignUp() {
         }
       }}
       validationSchema={yup.object().shape({
-        email: yup.string().email().required().matches(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/, 'Example test@gmail.com'),
+        email: yup
+          .string()
+          .email()
+          .required()
+          .matches(
+            /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/,
+            "Example test@gmail.com",
+          ),
         password: yup
           .string()
           .min(6, "Password shoul have at least 4 chars")
