@@ -31,7 +31,7 @@ export default function Profile() {
       if (data) {
         const items = Object.values(data);
         setArrColors(items as ObjectColor[][]);
-      } else setText("There are no saved paletters yet.");
+      } else setText("There are no saved palettes yet.");
     });
   }, []);
 
