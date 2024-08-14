@@ -23,21 +23,21 @@ export default function Palette() {
   if (colors)
     return (
       <GestureHandlerRootView>
-          <DraggableFlatList
-            data={colors}
-            renderItem={({ item, drag }) => (
-              <Card
-                drag={drag}
-                color={String(item.color)}
-                box_height={getBoxHeight(colors.length)}
-                index={colors.indexOf(item)}
-                lock={item.locked}
-              />
-            )}
-            keyExtractor={(item) => item.id}
-            onDragEnd={onMoveEnd}
-          />
-          <MyTabBar colors={colors} />
+        <DraggableFlatList
+          data={colors}
+          renderItem={({ item, drag }) => (
+            <Card
+              drag={drag}
+              color={String(item.color)}
+              box_height={getBoxHeight(colors.length)}
+              index={colors.indexOf(item)}
+              lock={item.locked}
+            />
+          )}
+          keyExtractor={(item) => item.id}
+          onDragEnd={onMoveEnd}
+        />
+        <MyTabBar colors={colors} />
       </GestureHandlerRootView>
     );
 }
