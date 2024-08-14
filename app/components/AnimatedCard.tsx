@@ -1,11 +1,13 @@
-import { Text, Dimensions } from "react-native";
+import { Text, Dimensions, View, Pressable } from "react-native";
 import Animated, {
   Extrapolation,
   interpolate,
   SharedValue,
   useAnimatedStyle,
 } from "react-native-reanimated";
-import { ObjectColor } from "../redux/ColorSlice";
+import colorState, { ObjectColor } from "../redux/ColorSlice";
+import { useDispatch } from "react-redux";
+import { useNavigation } from "expo-router";
 
 export const windowWidth = Dimensions.get("window").width;
 export const widthStory = Dimensions.get("window").width * 0.8;
@@ -18,6 +20,8 @@ interface Prop {
 }
 
 export default function AnimatedCard({ arr, index, scrollOffset }: Prop) {
+  const dispatch = useDispatch();
+  const naviagtion = useNavigation();
   const reanimContStyle = useAnimatedStyle(() => {
     const activeIndex = scrollOffset.value / widthStory;
     const paddingLeft = (windowWidth - widthStory) / 4;
@@ -48,32 +52,40 @@ export default function AnimatedCard({ arr, index, scrollOffset }: Prop) {
   });
   console.log(reanimContStyle);
 
+  function goToPalette() {
+    dispatch(colorState.actions.setArray(arr));
+    naviagtion.navigate("index" as never);
+    console.log("df");
+  }
+
   return (
     <Animated.View style={[{ zIndex: -index }, reanimContStyle]}>
-      <Animated.View
-        style={{
-          height: heightStory,
-          width: widthStory,
-          position: "absolute",
-        }}
-      >
-        {arr.map((item, index) => {
-          return (
-            <Animated.View
-              style={{
-                backgroundColor: item.color,
-                height: heightStory / arr.length,
-                width: widthStory,
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-              key={index}
-            >
-              <Text style={{ fontSize: 15 }}>{item.color}</Text>
-            </Animated.View>
-          );
-        })}
-      </Animated.View>
+      <Pressable onPress={goToPalette}>
+        <View
+          style={{
+            height: heightStory,
+            width: widthStory,
+            position: "absolute",
+          }}
+        >
+          {arr.map((item, index) => {
+            return (
+              <View
+                style={{
+                  backgroundColor: item.color,
+                  height: heightStory / arr.length,
+                  width: widthStory,
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+                key={index}
+              >
+                <Text style={{ fontSize: 15 }}>{item.color}</Text>
+              </View>
+            );
+          })}
+        </View>
+      </Pressable>
     </Animated.View>
   );
 }
