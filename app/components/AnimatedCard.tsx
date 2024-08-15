@@ -54,8 +54,7 @@ export default function AnimatedCard({ arr, index, scrollOffset }: Prop) {
 
   function goToPalette() {
     dispatch(colorState.actions.setArray(arr));
-    naviagtion.navigate("index" as never);
-    console.log("df");
+    naviagtion.navigate("Palette" as never);
   }
 
   return (
