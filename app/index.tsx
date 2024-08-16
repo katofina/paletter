@@ -8,7 +8,10 @@ export default function Home() {
       <Text style={style.text}>Create your own palettes</Text>
 
       <View style={style.buttonsView}>
-        <Pressable style={style.button}>
+        <Pressable
+          style={style.button}
+          onPress={() => navigation.navigate("PhotoPalette" as never)}
+        >
           <Text style={{ fontSize: 15 }}>Extract palette from image</Text>
         </Pressable>
 

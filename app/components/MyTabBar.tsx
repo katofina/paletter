@@ -19,6 +19,15 @@ function showtoast() {
   });
 }
 
+function showError() {
+  Toast.show({
+    type: "error",
+    text1: "You should sign in!",
+    visibilityTime: 1500,
+  });
+}
+
+
 export default function MyTabBar({ colors }: Prop) {
   const dispatch = useDispatch();
   const email = useSelector((store: Store) => store.authState.email);
@@ -26,7 +35,8 @@ export default function MyTabBar({ colors }: Prop) {
   function save() {
     if (email) {
       database().ref(email).push(colors);
-    }
+      showtoast();
+    } else showError();
   }
 
   return (
@@ -62,7 +72,6 @@ export default function MyTabBar({ colors }: Prop) {
         <TouchableOpacity
           onPress={() => {
             save();
-            showtoast();
           }}
         >
           <AntDesign name="save" size={24} color="black" />
