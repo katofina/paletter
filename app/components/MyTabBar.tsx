@@ -27,7 +27,6 @@ function showError() {
   });
 }
 
-
 export default function MyTabBar({ colors }: Prop) {
   const dispatch = useDispatch();
   const email = useSelector((store: Store) => store.authState.email);

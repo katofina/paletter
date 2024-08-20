@@ -6,6 +6,7 @@ import Swipeable from "react-native-gesture-handler/Swipeable";
 import { useDispatch } from "react-redux";
 import colorState from "../redux/ColorSlice";
 import { AntDesign } from "@expo/vector-icons";
+import DialogModule from "@/modules/dialog/src/DialogModule";
 interface Prop {
   color: string;
   box_height: number | undefined;
@@ -36,9 +37,16 @@ export default function Card({ drag, color, box_height, index, lock }: Prop) {
           />
         </View>
       )}
-      onSwipeableRightOpen={() =>
-        dispatch(colorState.actions.deleteColor(index))
-      }
+      onSwipeableRightOpen={() => {
+        DialogModule.show(
+          "Delete",
+          "Are you sure you want to delete this color?",
+          "Yes",
+          "No",
+        ).then((val: boolean) => {
+          if (val === true) dispatch(colorState.actions.deleteColor(index));
+        });
+      }}
       renderLeftActions={() => (
         <Panel color={color} index={index} lock={lock} drag={drag} />
       )}
