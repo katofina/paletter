@@ -1,10 +1,12 @@
 package expo.modules.dialog
 
-import android.app.AlertDialog
+import android.util.Log
 import expo.modules.kotlin.Promise
 import expo.modules.kotlin.exception.toCodedException
 import expo.modules.kotlin.modules.Module
 import expo.modules.kotlin.modules.ModuleDefinition
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import expo.modules.kotlin.functions.Queues
 
 class DialogModule : Module() {
   override fun definition() = ModuleDefinition {
@@ -12,11 +14,12 @@ class DialogModule : Module() {
 
     AsyncFunction("show") { title: String, message: String, positive: String, negative: String, promise: Promise ->
       val context = appContext.currentActivity
+      Log.d("context", context.toString())
       if (context == null) {
         promise.reject(Exception("There is no activity").toCodedException())
         return@AsyncFunction
       }
-      val builder = AlertDialog.Builder(context)
+      val builder = MaterialAlertDialogBuilder(context, R.style.AlertDialogTheme)
       builder.setTitle(title)
       builder.setMessage(message)
       builder.setPositiveButton(positive) { dialogInterface, _ ->
@@ -28,6 +31,6 @@ class DialogModule : Module() {
         promise.resolve(false)
       }
       builder.show()
-    }
+    }.runOnQueue(Queues.MAIN)
   }
 }
