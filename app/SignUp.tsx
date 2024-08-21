@@ -91,14 +91,17 @@ export default function SignUp() {
 const styles = StyleSheet.create({
   formContainer: {
     padding: 50,
+    height: "100%",
+    backgroundColor: "white"
   },
   signButton: {
     width: "auto",
     height: 50,
-    borderWidth: 2,
+    borderWidth: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "antiquewhite",
+    backgroundColor: "honeydew",
+    marginTop: "5%"
   },
   inputStyle: {
     borderWidth: 1,

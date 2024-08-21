@@ -83,15 +83,18 @@ export default function SignIn(): React.JSX.Element {
 const styles = StyleSheet.create({
   formContainer: {
     padding: 50,
+    backgroundColor: "white",
+    height: "100%"
   },
   signButton: {
     width: "auto",
     height: 50,
-    borderWidth: 2,
+    borderWidth: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "antiquewhite",
-  },
+    backgroundColor: "honeydew",
+    marginTop: "5%"
+    },
   inputStyle: {
     borderWidth: 1,
     borderColor: "#4e4e4e",
