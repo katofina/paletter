@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { View, Text, Pressable, StyleSheet, ActivityIndicator } from "react-native";
+import {
+  View,
+  Text,
+  Pressable,
+  StyleSheet,
+  ActivityIndicator,
+} from "react-native";
 import { launchCamera, launchImageLibrary } from "react-native-image-picker";
 import { Skia, SkImage } from "@shopify/react-native-skia";
 import { Canvas } from "@shopify/react-native-skia";
@@ -9,8 +15,8 @@ import { useDispatch } from "react-redux";
 import colorState from "./redux/ColorSlice";
 import { useNavigation } from "expo-router";
 
-const LIBRARY = 'library';
-const CAMERA = 'camera'
+const LIBRARY = "library";
+const CAMERA = "camera";
 
 const generateSkiaImage = async (path: string) => {
   return await Skia.Data.fromURI(path).then((data) =>
@@ -29,11 +35,15 @@ export default function PhotoPalette() {
   function goToEdit() {
     const newArr = [];
     for (let i = 0; i < colors.length; i++) {
-      newArr.push({color: colors[i], locked: false, id: "id" + Math.random().toString(16).slice(2)})
-    };
+      newArr.push({
+        color: colors[i],
+        locked: false,
+        id: "id" + Math.random().toString(16).slice(2),
+      });
+    }
     dispatch(colorState.actions.setArray(newArr));
     navigation.navigate("Palette" as never);
-  };
+  }
 
   async function uploadImage(method: string) {
     setLoad(true);
@@ -44,23 +54,25 @@ export default function PhotoPalette() {
       result = await launchImageLibrary({ mediaType: "photo" });
     } else {
       result = await launchCamera({ mediaType: "photo" });
-    };
+    }
     if (result.errorMessage) {
       setError(result.errorMessage);
       setLoad(false);
       return;
     } else if (result.didCancel) {
       setLoad(false);
-    };
-    generateSkiaImage(result.assets![0].uri!).then((value) => {
-      if (value) {
-        const arrPixels = value.readPixels();
-        const arrColors = getPixelColors(arrPixels);
-        setColors(arrColors);
-        setImage(value);
-        setLoad(false);
-      }
-    }).catch((e) => setError(e));
+    }
+    generateSkiaImage(result.assets![0].uri!)
+      .then((value) => {
+        if (value) {
+          const arrPixels = value.readPixels();
+          const arrColors = getPixelColors(arrPixels);
+          setColors(arrColors);
+          setImage(value);
+          setLoad(false);
+        }
+      })
+      .catch((e) => setError(e));
   }
 
   return (
@@ -74,14 +86,16 @@ export default function PhotoPalette() {
           <Text>From camera</Text>
         </Pressable>
       </View>
-      <View style={{
-        height: "80%",
-        width: "100%",
-        justifyContent: "space-around",
-        alignItems: "center",
-      }}>
-        {load ? (<ActivityIndicator animating={true} size="small"/>) : null }
-        {error ? (<Text>Error: {error}</Text>): null}
+      <View
+        style={{
+          height: "80%",
+          width: "100%",
+          justifyContent: "space-around",
+          alignItems: "center",
+        }}
+      >
+        {load ? <ActivityIndicator animating={true} size="small" /> : null}
+        {error ? <Text>Error: {error}</Text> : null}
         <View style={style.canvas}>
           <Canvas style={style.canvas}>
             {image ? (
@@ -91,7 +105,7 @@ export default function PhotoPalette() {
         </View>
 
         {colors.length ? (
-          <Pressable style={{width: "90%", height: "20%"}} onPress={goToEdit}>
+          <Pressable style={{ width: "90%", height: "20%" }} onPress={goToEdit}>
             <View style={style.palette}>
               {colors.map((item, index) => (
                 <View
@@ -129,7 +143,7 @@ const style = StyleSheet.create({
     alignItems: "center",
     marginTop: "3%",
     borderBottomWidth: 1,
-    borderBottomColor: "silver"
+    borderBottomColor: "silver",
   },
   button: {
     borderWidth: 1,
