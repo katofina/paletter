@@ -1,5 +1,0 @@
-expo.modules.dialog
-style AlertDialogTheme
-style AppTheme
-style NegativeButtonStyle
-style PositiveButtonStyle
