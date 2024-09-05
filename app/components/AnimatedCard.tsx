@@ -50,7 +50,6 @@ export default function AnimatedCard({ arr, index, scrollOffset }: Prop) {
       ],
     };
   });
-  console.log(reanimContStyle);
 
   function goToPalette() {
     dispatch(colorState.actions.setArray(arr));

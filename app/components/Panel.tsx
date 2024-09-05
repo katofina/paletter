@@ -10,7 +10,8 @@ interface Prop {
   color: string;
   index: number;
   lock: boolean;
-  drag: () => void;
+  drag?: () => void;
+  id: string;
 }
 
 function showtoast() {
@@ -21,7 +22,7 @@ function showtoast() {
   });
 }
 
-export default function Panel({ color, index, lock, drag }: Prop) {
+export default function Panel({ color, index, lock }: Prop) {
   const dispatch = useDispatch();
 
   async function copyColor() {
@@ -30,14 +31,6 @@ export default function Panel({ color, index, lock, drag }: Prop) {
 
   return (
     <View style={style.buttonPanel}>
-      <Pressable onPressIn={drag}>
-        <FontAwesome
-          style={style.changeButton}
-          name="exchange"
-          size={24}
-          color="black"
-        />
-      </Pressable>
       <TouchableOpacity
         onPress={() => {
           copyColor();
@@ -70,12 +63,9 @@ export default function Panel({ color, index, lock, drag }: Prop) {
 const style = StyleSheet.create({
   buttonPanel: {
     flexDirection: "row",
-    justifyContent: "space-around",
+    justifyContent: "space-evenly",
     alignItems: "center",
     width: "50%",
     backgroundColor: "white",
-  },
-  changeButton: {
-    transform: "rotate(90deg)",
   },
 });

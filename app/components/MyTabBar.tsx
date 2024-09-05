@@ -87,6 +87,11 @@ const style = StyleSheet.create({
     justifyContent: "space-around",
     alignItems: "center",
     backgroundColor: "white",
+    position: 'absolute',
+    zIndex: 15,
+    bottom: 0,
+    left: 0,
+    width: '100%'
   },
   generate: {
     borderWidth: 1,
