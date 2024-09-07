@@ -101,7 +101,7 @@ export default function Card({
           });
         }}
         renderLeftActions={() => (
-          <Panel color={color} index={index} lock={lock} drag={drag} id={id} />
+          <Panel index={index} lock={lock} drag={drag} id={id} />
         )}
       >
         <View style={styles.card}>

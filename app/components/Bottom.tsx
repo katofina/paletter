@@ -5,42 +5,44 @@ import colorState, { ObjectColor } from "../redux/ColorSlice";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import database from "@react-native-firebase/database";
 import { Store } from "../redux/Store";
-import Toast from "react-native-toast-message";
+import { useState } from "react";
+import { Hint } from "./Hint";
 
 interface Prop {
   colors: Array<ObjectColor>;
 }
 
-function showtoast() {
-  Toast.show({
-    type: "success",
-    text1: "Successfully saved",
-    visibilityTime: 1500,
-  });
-}
-
-function showError() {
-  Toast.show({
-    type: "error",
-    text1: "You should sign in!",
-    visibilityTime: 1500,
-  });
-}
-
-export default function MyTabBar({ colors }: Prop) {
+export default function Bottom({ colors }: Prop) {
   const dispatch = useDispatch();
+  const [isSave, setIsSave] = useState(false);
+  const [isError, setIsError] = useState(false);
   const email = useSelector((store: Store) => store.authState.email);
 
   function save() {
     if (email) {
       database().ref(email).push(colors);
-      showtoast();
-    } else showError();
+      setIsSave(true);
+    } else {
+      setIsError(true);
+    }
   }
 
   return (
     <>
-      <Toast></Toast>
+      <Hint
+        text="You should sign in!"
+        color="red"
+        isActivate={isError}
+        setIsActivate={setIsError}
+        delay={3000}
+      />
+      <Hint
+        text="Successfully saved"
+        color="green"
+        isActivate={isSave}
+        setIsActivate={setIsSave}
+        delay={3000}
+      />
       <View style={style.bottomPanel}>
         <Pressable
           style={style.generate}
@@ -68,11 +70,7 @@ export default function MyTabBar({ colors }: Prop) {
         >
           <Ionicons name="return-up-forward-outline" size={30} color="black" />
         </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            save();
-          }}
-        >
+        <TouchableOpacity onPress={save}>
           <AntDesign name="save" size={24} color="black" />
         </TouchableOpacity>
       </View>
@@ -87,11 +85,11 @@ const style = StyleSheet.create({
     justifyContent: "space-around",
     alignItems: "center",
     backgroundColor: "white",
-    position: 'absolute',
+    position: "absolute",
     zIndex: 15,
     bottom: 0,
     left: 0,
-    width: '100%'
+    width: "100%",
   },
   generate: {
     borderWidth: 1,
