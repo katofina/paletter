@@ -43,9 +43,14 @@ export default function Card({ drag, color, box_height, index, lock }: Prop) {
           "Are you sure you want to delete this color?",
           "Yes",
           "No",
-        ).then((val: boolean) => {
-          if (val === true) dispatch(colorState.actions.deleteColor(index));
-        });
+        )
+          .then((val: boolean) => {
+            if (val === true) dispatch(colorState.actions.deleteColor(index));
+          })
+          .catch((error: Error) => {
+            console.error(error);
+            dispatch(colorState.actions.deleteColor(index));
+          });
       }}
       renderLeftActions={() => (
         <Panel color={color} index={index} lock={lock} drag={drag} />
