@@ -1,50 +1,20 @@
-# Welcome to your Expo app 👋
+"Palette" - pet-project, in that application you can generate colors, create palettes and save them in your account. Also there is a function to generate palette from either image or photo from a camera.
+Project was create via Expo.
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+To store some data about the user(palettes, login, password) was used Firebase.
 
-## Get started
+There is one module, that is written on Kotlin, from android material - Alert Dialog Module.
 
-1. Install dependencies
+To generate palettes was used transforming an array of pixels(via canvas) into rgb, and then checking bigger range via recursion function(+luminance).
 
-   ```bash
-   npm install
-   ```
-
-2. Start the app
-
-   ```bash
-    npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+# Libraries:
+1. For generating colors was used the library "randomcolor", that has some properties to generate colors (luminosity, hue).*
+2. @shopify/react-native-skia - for canvas to get an image array of pixels.
+3. react-native-firebase/ - to sign up and login, save palettes.
+4. expo-clipboard - to copy text of the necessary color.
+5. react-native-draggable-flatlist - to create a palette with effective, swift animation.*
+6. react-native-image-picker - to get an image from the store of a phone or from a camera.
+7. react-native-toast-message - to add tooltips.*
+8. react-native-reanimated - for effective and swift animations that are used in watching palettes in the profile.
+9. formik - for creating forms of sign in and sign up.
+*On branch "without_libraries" you can see some work functions without using libraries.
