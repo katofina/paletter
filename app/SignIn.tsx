@@ -16,10 +16,11 @@ export default function SignIn(): React.JSX.Element {
       }}
       onSubmit={async (values) => {
         try {
-          auth().signInWithEmailAndPassword(values.email, values.password);
-          navigate.goBack();
+          auth().signInWithEmailAndPassword(values.email, values.password)
+          .then(() => navigate.goBack())
+          .catch((err) => setError(String(err)));
         } catch (error) {
-          setError(error as string);
+          setError(String(error));
         }
       }}
       validationSchema={yup.object().shape({

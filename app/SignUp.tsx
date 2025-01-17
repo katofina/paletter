@@ -17,10 +17,11 @@ export default function SignUp() {
       }}
       onSubmit={async (values) => {
         try {
-          auth().createUserWithEmailAndPassword(values.email, values.password);
-          navigation.goBack();
+          auth().createUserWithEmailAndPassword(values.email, values.password)
+          .then(() => navigation.goBack())
+          .catch((err) => setError(String(err)));
         } catch (error) {
-          setError(error as string);
+          setError(String(error));
         }
       }}
       validationSchema={yup.object().shape({
