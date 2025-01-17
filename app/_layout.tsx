@@ -25,11 +25,15 @@ export default function RootLayout() {
               headerShown: true,
               headerTitle: "Palette",
               headerRight: () => <PanelSign />,
+              headerBackTitleVisible: false,
             }}
           />
           <Stack.Screen
             name="PhotoPalette"
-            options={{ headerTitle: "Palette" }}
+            options={{ 
+              headerTitle: "Palette",
+              headerBackTitleVisible: false,
+            }}
           />
           <Stack.Screen name="SignIn" options={{ headerTitle: "Sign In" }} />
           <Stack.Screen name="SignUp" options={{ headerTitle: "Sign Up" }} />

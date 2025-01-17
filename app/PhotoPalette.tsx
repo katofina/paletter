@@ -55,14 +55,15 @@ export default function PhotoPalette() {
     } else {
       result = await launchCamera({ mediaType: "photo" });
     }
-    if (result.errorMessage) {
-      setError(result.errorMessage);
+    if (result.errorCode) {
+      setError(result.errorCode);
       setLoad(false);
       return;
     } else if (result.didCancel) {
       setLoad(false);
     }
-    generateSkiaImage(result.assets![0].uri!)
+    if (result.assets) {
+      generateSkiaImage(result.assets[0].uri!)
       .then((value) => {
         if (value) {
           const arrPixels = value.readPixels();
@@ -72,7 +73,8 @@ export default function PhotoPalette() {
           setLoad(false);
         }
       })
-      .catch((e) => setError(e));
+      .catch((e) => {setError(e); setLoad(false)});
+    } else {setLoad(false)}
   }
 
   return (

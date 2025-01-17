@@ -4,16 +4,12 @@ interface RGB {
   b: number;
 }
 
-interface HSL {
-  h: number;
-  s: number;
-  l: number;
-}
-
 export default function getPixelsColors(
   data: Float32Array | Uint8Array | null,
 ) {
+  console.log("startGetPixelsColor")
   const buildRgb = (data: Float32Array | Uint8Array) => {
+    console.log("buildRgb");
     const rgbValues = [];
     for (let i = 0; i < data.length; i += 4) {
       const rgb = {
@@ -27,6 +23,7 @@ export default function getPixelsColors(
   };
 
   const findBiggestColorRange = (rgbValues: RGB[]) => {
+    console.log("findBiggestCoolorRRange");
     let rMin = Number.MAX_VALUE;
     let gMin = Number.MAX_VALUE;
     let bMin = Number.MAX_VALUE;
@@ -60,6 +57,7 @@ export default function getPixelsColors(
   };
 
   const quantization = (rgbValues: RGB[], depth: number): RGB[] => {
+    console.log("quantization")
     const MAX_DEPTH = 3;
     if (depth === MAX_DEPTH || rgbValues.length === 0) {
       const color = rgbValues.reduce(
@@ -82,9 +80,10 @@ export default function getPixelsColors(
       color.b = Math.round(color.b / rgbValues.length);
       return [color];
     }
-    // recursion code goes below
+
     const componentToSortBy = findBiggestColorRange(rgbValues);
     rgbValues.sort((p1, p2) => {
+      console.log("rgbValuesSort")
       return p1[componentToSortBy] - p2[componentToSortBy];
     });
 
@@ -99,6 +98,7 @@ export default function getPixelsColors(
     const calculateLuminance = (p: RGB) => {
       return 0.2126 * p.r + 0.7152 * p.g + 0.0722 * p.b;
     };
+    console.log("orderByLuminance")
 
     return rgbValues.sort((p1, p2) => {
       return calculateLuminance(p2) - calculateLuminance(p1);
@@ -115,6 +115,7 @@ export default function getPixelsColors(
       const hex = c.toString(16);
       return hex.length == 1 ? "0" + hex : hex;
     };
+    console.log("rrgbToHex");
 
     return (
       "#" +
@@ -128,6 +129,7 @@ export default function getPixelsColors(
     const rDifference = Math.pow(color2.r - color1.r, 2);
     const gDifference = Math.pow(color2.g - color1.g, 2);
     const bDifference = Math.pow(color2.b - color1.b, 2);
+    console.log("calculateColorDifference")
 
     return rDifference + gDifference + bDifference;
   };
