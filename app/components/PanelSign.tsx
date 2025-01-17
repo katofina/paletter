@@ -4,15 +4,14 @@ import {
   View,
   Text,
   StyleSheet,
-  Dimensions,
 } from "react-native";
 import { useState } from "react";
 import auth from "@react-native-firebase/auth";
 import { useDispatch } from "react-redux";
 import authState from "../redux/AuthSlice";
-const screenHeight = Dimensions.get("screen").height;
-const windowHeight = Dimensions.get("window").height;
-const navbarHeight = screenHeight - windowHeight;
+import { useHeaderHeight } from '@react-navigation/elements';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
 
 export default function PanelSign() {
   const [isAuth, setIsAuth] = useState(false);
@@ -32,17 +31,21 @@ export default function PanelSign() {
     }
   });
 
+  const headerHeight = useHeaderHeight();
+  const insets = useSafeAreaInsets();
+  const styles = getStyles(headerHeight - insets.top);
+
   if (!isAuth) {
     return (
-      <View style={style.viewLinks}>
+      <View style={styles.viewLinks}>
         <TouchableOpacity
-          style={style.link}
+          style={styles.link}
           onPress={() => navigation.navigate("SignUp" as never)}
         >
           <Text>Sign Up</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={style.link}
+          style={styles.link}
           onPress={() => navigation.navigate("SignIn" as never)}
         >
           <Text>Sign In</Text>
@@ -51,25 +54,25 @@ export default function PanelSign() {
     );
   } else
     return (
-      <View style={style.viewLinks}>
+      <View style={styles.viewLinks}>
         <TouchableOpacity
-          style={style.link}
+          style={styles.link}
           onPress={() => navigation.navigate("Profile" as never)}
         >
           <Text>Profile</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={style.link} onPress={() => auth().signOut()}>
+        <TouchableOpacity style={styles.link} onPress={() => auth().signOut()}>
           <Text>Sign Out</Text>
         </TouchableOpacity>
       </View>
     );
 }
 
-const style = StyleSheet.create({
+const getStyles = (headerHeight: number) => StyleSheet.create({
   viewLinks: {
     flexDirection: "row",
     width: "60%",
-    height: navbarHeight,
+    height: headerHeight,
   },
   link: {
     borderWidth: 1,
@@ -79,5 +82,6 @@ const style = StyleSheet.create({
     justifyContent: "center",
     marginLeft: 10,
     backgroundColor: "honeydew",
+    borderRadius: 5
   },
 });
